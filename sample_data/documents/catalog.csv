@@ -1,0 +1,4 @@
+id,sku,title,category,price
+1,SKU-001,Enterprise Gateway License,Software,4999.00
+2,SKU-002,Secure Enclave Chip,Hardware,129.50
+3,SKU-003,Security Audit Package,Services,8500.00

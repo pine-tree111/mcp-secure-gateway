@@ -1,0 +1,4 @@
+Onboarding notes:
+Primary contact for infrastructure inquiries: ops-team@internal-corp.org
+For urgent paging, call: 555-019-2834
+All production migrations require signed approvals.

@@ -1,0 +1,31 @@
+services:
+  mcp-gateway:
+    build: .
+    read_only: true
+    user: "1001:1001"
+    cap_drop:
+      - ALL
+    security_opt:
+      - "no-new-privileges:true"
+    ports:
+      # Explicitly bind to host loopback ONLY.
+      # Rejects all external LAN and public inbound packets at the host firewall level.
+      - "127.0.0.1:8000:8000"
+    environment:
+      - MCP_TRANSPORT=streamable-http
+      - MCP_HOST=0.0.0.0
+      - MCP_PORT=8000
+      - ENVIRONMENT=production
+    tmpfs:
+      - /tmp:size=64M,noexec,nosuid,nodev
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 512M
+          pids: 128
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
