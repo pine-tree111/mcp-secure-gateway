@@ -69,9 +69,17 @@ else
     fail "pip-audit not installed — required by security policy (install via: uv tool install pip-audit or uv sync --all-extras)"
 fi
 
-# ── 6. Docker Port Hardening  ──
+# ── 6. Docker Hardening (CIS 5.13 & .dockerignore) ──
 echo ""
-echo "── Step 6/11: Docker Port Hardening ──"
+echo "── Step 6/11: Docker Hardening ──"
+if [ -f "Dockerfile" ]; then
+    [ -f ".dockerignore" ] || fail "Dockerfile exists but .dockerignore is missing!"
+    grep -q "^\.git" .dockerignore 2>/dev/null || fail ".dockerignore must exclude .git"
+    grep -q "^\.env" .dockerignore 2>/dev/null || fail ".dockerignore must exclude .env"
+    grep -q "^\.venv" .dockerignore 2>/dev/null || fail ".dockerignore must exclude .venv"
+    pass ".dockerignore present and blocks .git, .env, .venv"
+fi
+
 if ls docker-compose*.yml 1> /dev/null 2>&1; then
     if grep -rnE '^\s*-\s*["\x27]?[0-9]+:[0-9]+' docker-compose*.yml 2>/dev/null; then
         fail "Bare port publication detected in docker-compose.yml! Use '127.0.0.1:PORT:PORT' (CIS 5.13)."
