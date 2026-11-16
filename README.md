@@ -49,7 +49,7 @@ flowchart TD
 
 ---
 
-## Core Zero-Trust Invariants
+## Host-Enforced Security Invariants
 
 | Security Invariant | Defensive Implementation | OWASP LLM Mapping |
 |:---|:---|:---|
